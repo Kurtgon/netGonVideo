@@ -359,9 +359,18 @@ public class CrudService {
 		Film f = filmRepository.findFilmByTitle(title);
 		ResponseEntity<?> response;
 		if(f ==null) {
-			response = ResponseEntity
-					.status(HttpStatus.CREATED)
-					.body(crudRepositoryFilm.save(sent));
+			long idCategory = sent.getCategorias().getId();
+			Category categorySent = categoryRepository.findCategoryById(idCategory);
+			if(categorySent == null) {
+				response = ResponseEntity
+						.status(HttpStatus.NOT_FOUND)
+						.body("La categoría no existe");
+			}else {
+				sent.setCategorias(categorySent);
+				response = ResponseEntity
+						.status(HttpStatus.CREATED)
+						.body(crudRepositoryFilm.save(sent));
+			}	
 		}else {
 			response=ResponseEntity
 					.status(HttpStatus.CONFLICT)
@@ -445,9 +454,18 @@ public class CrudService {
 		Serie s = serieRepository.findFilmByTitle(title);
 		ResponseEntity<?> response;
 		if(s == null) {
-			response=ResponseEntity
-					.status(HttpStatus.CREATED)
-					.body(crudRepositorySerie.save(sent));
+			long idCategory = sent.getCategorias().getId();
+			Category categorySent = categoryRepository.findCategoryById(idCategory);
+			if(categorySent == null) {
+				response =ResponseEntity
+						.status(HttpStatus.NOT_FOUND)
+						.body("La categoría no existe");
+			}else {
+				sent.setCategorias(categorySent);
+				response=ResponseEntity
+						.status(HttpStatus.CREATED)
+						.body(crudRepositorySerie.save(sent));
+			}
 		}else {
 			response=ResponseEntity
 					.status(HttpStatus.CONFLICT)

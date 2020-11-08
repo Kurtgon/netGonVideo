@@ -19,7 +19,7 @@ import javax.persistence.Transient;
 @Entity
 public class Visual implements Serializable{
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	//Variables
 	private long id;
 	private Date inicioPlay;

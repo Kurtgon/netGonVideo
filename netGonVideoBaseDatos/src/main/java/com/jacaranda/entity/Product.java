@@ -22,18 +22,13 @@ import javax.persistence.Transient;
 @MappedSuperclass
 public class Product implements Serializable{
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String title;
 	private String description;
 	private int agno;
 	
-	// Relación con la entidad Categoría
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="categorias_id", foreignKey = @ForeignKey(name="categorias_id_fk"), nullable = false)
-	
-	//Objeto categoría para la relación
-	private Category categorias;
+	//Debería ir la relación con categoría en vez de repetir en cada identidad hija pero con la etiqueta MappedSuperClass no identifica Product como entidad y da un error
 	
 	
 	//Constructores
@@ -42,12 +37,11 @@ public class Product implements Serializable{
 		
 	}
 	
-	public Product(String title, String description, int agno,Category categorias) {
+	public Product(String title, String description, int agno) {
 		super();
 		this.title = title;
 		this.description = description;
 		this.agno = agno;
-		this.categorias = categorias;
 		
 	}
 	
@@ -78,9 +72,5 @@ public class Product implements Serializable{
 	}
 	public long getId() {
 		return id;
-	}
-
-	public Category getCategorias() {
-		return categorias;
 	}
 }

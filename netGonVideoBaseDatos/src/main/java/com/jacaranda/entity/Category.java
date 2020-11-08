@@ -14,14 +14,13 @@ import javax.persistence.OneToMany;
 @Entity
 public class Category implements Serializable{
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private tipoCategory tipoCategory;
 	
 	
 	public Category() {
 		super();
-		//product = new ArrayList<Product>();
 	}
 	
 	//Constructores
