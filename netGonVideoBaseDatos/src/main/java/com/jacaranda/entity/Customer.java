@@ -13,10 +13,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.NonNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Customer implements Comparable<Customer>,Serializable {
@@ -39,6 +42,11 @@ public class Customer implements Comparable<Customer>,Serializable {
 	@OneToMany(mappedBy="customer")
 	private List<Visual> visualizaciones;
 	
+	//Relaciones con la entidad Document
+	@OneToOne(targetEntity = Document.class)
+	@JsonIgnore
+	private Document doc;
+	
 	
 	//Constructores
 	public Customer() {
@@ -47,12 +55,13 @@ public class Customer implements Comparable<Customer>,Serializable {
 	}
 
 
-	public Customer(String name, String surnames, LocalDate birthDate, String dni) {
+	public Customer(String name, String surnames, LocalDate birthDate, String dni, Document doc) {
 		super();
 		this.name = name;
 		this.surnames = surnames;
 		this.birthDate = birthDate;
 		this.dni = dni;
+		this.doc = doc;
 		visualizaciones = new ArrayList<Visual>();
 	}
 
@@ -94,6 +103,17 @@ public class Customer implements Comparable<Customer>,Serializable {
 		return visualizaciones;
 	}
 	
+	
+	public Document getDoc() {
+		return doc;
+	}
+
+
+	public void setDoc(Document doc) {
+		this.doc = doc;
+	}
+
+
 	//ComparaTo
 	@Override
 	public int compareTo(Customer other) {
